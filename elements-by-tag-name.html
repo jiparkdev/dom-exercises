@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Heading with a <span>span</span> element.</h1>
+    <p>A paragraph with <span>one</span>, <span>two</span> spans.</p>
+
+    <script>
+      function byTagName(node, tagName) {
+        let targetNodes = [];
+        function fx(x, y) {
+          if (x.nodeType === Node.ELEMENT_NODE) {
+            if (!x.hasChildNodes()) {
+              return [];
+            }
+            for (let i = 0; i < x.childNodes.length; i++) {
+              if (x.childNodes[i].nodeName.toLowerCase() === y) {
+                targetNodes.push(x.childNodes[i]);
+              }
+              fx(x.childNodes[i], y);
+            }
+          }
+        }
+        fx(node, tagName);
+        return targetNodes;
+      }
+
+      console.log(byTagName(document.body, "h1").length);
+      // → 1
+      console.log(byTagName(document.body, "span").length);
+      // → 3
+      let para = document.querySelector("p");
+      console.log(byTagName(para, "span").length);
+      // → 2
+    </script>
+  </body>
+</html>
